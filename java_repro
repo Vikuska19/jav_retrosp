@@ -1,0 +1,69 @@
+package org.example;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+
+public class Main {
+    public static void main(String[] args) {
+        String[] words = {"clear", "tray", "clear", "old", "rest", "storm", "wrap", "stock", "since", "boots", "accord"};
+        Set<String> uniqueWords = new HashSet<>();
+        for (String word : words) {
+            boolean add;
+            if (uniqueWords.add(word)) add = true;
+            else add = false;
+        }
+        System.out.println("Слова: " + uniqueWords);
+        Map<String, Integer> wordCount = new HashMap<>();
+        for (String word : words) {
+            if (wordCount.containsKey(word)) {
+                wordCount.put(word, wordCount.get(word) + 1);
+            } else {
+                wordCount.put(word, 1);
+            }
+        }
+        System.out.println("Количество слов:");
+        for (Map.Entry<String, Integer> entry : wordCount.entrySet()) {
+            System.out.println(entry.getKey() + ": " + entry.getValue());
+        }
+    }
+}
+
+
+
+
+
+package org.example;
+
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+
+final class PhoneDirectory {
+    private final Map<String, Set<String>> phoneBook = new HashMap<>();
+    public PhoneDirectory() {
+    }
+    public void add(String lastName, String phoneNumber) {
+        if (phoneBook.containsKey(lastName)) {
+            phoneBook.get(lastName).add(phoneNumber);
+        } else {
+            Set<String> phoneNumbers = new HashSet<>();
+            phoneNumbers.add(phoneNumber);
+            phoneBook.put(lastName, phoneNumbers);
+        }
+    }
+    public Set<String> get(String lastName) {
+        Set<String> orDefault = phoneBook.getOrDefault(lastName, new HashSet<>());
+        return orDefault;
+    }
+    public static void main(String[] args) {
+        PhoneDirectory directory = new PhoneDirectory();
+        directory.add("Viktoria", "897772389754");
+        directory.add("Maria", "89876587876");
+        directory.add("Polina", "897555555");
+        System.out.println("Телефон Viktoria: " + directory.get("Viktoria"));
+        System.out.println("Телефон Maria: " + directory.get("Maria"));
+        System.out.println("Телефон Polina: " + directory.get("Polina"));
+    }
+}
